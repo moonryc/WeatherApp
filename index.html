@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/styles.css" rel="stylesheet">
+    <title>Weather Dashboard</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Weather Dashboard</span>
+        </div>
+    </nav>
+</header>
+
+<main class="container">
+    <div class="row">
+        <!--Search col-->
+        <div class="col">
+            <form>
+            <h4>Search for a City:</h4>
+                <label for="cityInput">
+                    <input id="cityInput"/>
+                </label>
+                <br/>
+                <button>Search</button>
+            </form>
+            <ul class="list-group">
+                <li class="list-group-item">Hello</li>
+                <li class="list-group-item">Hello</li>
+                <li class="list-group-item">Hello</li>
+                <li class="list-group-item">Hello</li>
+                <li class="list-group-item">Hello</li>
+            </ul>
+
+        </div>
+        <!--Search Results Col-->
+        <div class="col">
+            <div class="container">
+                <div class="row" id="today">Today's Data Display</div>
+                <div class="row">5 Day Forecast</div>
+                <div class="row">
+                    <div class="col card text-center" id="day1">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 1</h5>
+                        <p class="card-text">Hello</p>
+                        </div>
+                    </div>
+                    <div class="col card text-center" id="day2">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 2</h5>
+                            <p class="card-text">Hello</p>
+                        </div>
+                    </div>
+                    <div class="col card text-center" id="day3">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 3</h5>
+                            <p class="card-text">Hello</p>
+                        </div>
+                    </div>
+                    <div class="col card text-center" id="day4">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 4</h5>
+                            <p class="card-text">Hello</p>
+                        </div>
+                    </div>
+                    <div class="col card text-center" id="day5">
+                        <div class="card-body">
+                            <h5 class="card-title">Day 5</h5>
+                            <p class="card-text">Hello</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="assets/javascript/script.js"></script>
+</body>
+</html>
