@@ -1,6 +1,8 @@
+let forecastRow = $("#forecast")
+
 let appid = "d72536f7b081c8bc80ce18b1e71d4181"
 
-let listOfSearchedCities = [{},{},{},{},{}]
+let listOfSearchedCities = [{}, {}, {}, {}, {}]
 
 let today = {
     location: "",
@@ -19,7 +21,7 @@ let fiveDayForecast = []
  * @param cityName
  */
 const saveSearches = (cityName) => {
-    if(listOfSearchedCities.indexOf(cityName) === -1){
+    if (listOfSearchedCities.indexOf(cityName) === -1) {
         listOfSearchedCities.push(cityName)
         localStorage.setItem("weatherCities", JSON.stringify(listOfSearchedCities))
         generateSearchHistory()
@@ -90,26 +92,26 @@ const getForecast = (cityName) => {
         fetch(coordinatesUrl).then(response => {
             if (response.ok) {
                 response.json().then(data => {
-                    console.log(data)
+                    forecastRow.empty()
                     today.location = cityName
                     today.uvIndex = data.uvi
                     today.date = moment().format("DD/MM/YYYY")
-                    //TODO
-                    // today.icon
+                    today.icon = data.current.weather[0].icon
                     today.wind = data.current.wind_speed
                     today.humidity = data.current.humidity
                     today.temp = data.current.temp
 
-                    for(let i = 0;i<5;i++){
+                    for (let i = 0; i < 5; i++) {
 
-                        fiveDayForecast[i] ={
-                            date: moment().add(i,"days").format("DD/MM/YYYY"),
-                            //TODO
-                            // fiveDayForecast[i].icon
-                            temp : data.daily[i].temp.day,
-                            wind : data.daily[i].wind_speed,
-                            humidity : data.daily[i].humidity,
+                        fiveDayForecast[i] = {
+                            date: moment().add(i, "days").format("DD/MM/YYYY"),
+                            icon: data.daily[i].weather[0].icon,
+                            temp: data.daily[i].temp.day,
+                            wind: data.daily[i].wind_speed,
+                            humidity: data.daily[i].humidity,
                         }
+
+                        generateForecastDay(fiveDayForecast[i])
 
                     }
                     console.log(fiveDayForecast)
@@ -123,10 +125,36 @@ const getForecast = (cityName) => {
     }
 
 
-
-
     getCityCoordinates(cityName)
 
+}
+
+/**
+ * Generates a forecast day based on the provided object representing a forecast day
+ * @param dayObject
+ */
+const generateForecastDay = (dayObject) => {
+    let card = $("<div>").addClass("col card m-1")
+
+    let cardBody = $("<div>").addClass("card-body")
+    cardBody.appendTo(card)
+
+    let cardTitle = $("<h5>").addClass("card-title text-center").text(dayObject.date)
+    cardTitle.appendTo(cardBody)
+
+    let unorderedList = $("<ul>").addClass("card-text")
+    unorderedList.appendTo(cardBody)
+
+    let forecastIcon = $(`<img alt='' src="http://openweathermap.org/img/wn/${dayObject.icon}@2x.png">`)
+    forecastIcon.appendTo(unorderedList)
+    let tempList = $("<li>").text(`${dayObject.temp} C°`)
+    tempList.appendTo(unorderedList)
+    let windList = $("<li>").text(`${dayObject.wind} km/h`)
+    windList.appendTo(unorderedList)
+    let humidityList = $("<li>").text(`${dayObject.humidity} %`)
+    humidityList.appendTo(unorderedList)
+
+    forecastRow.append(card)
 }
 
 /**
@@ -145,7 +173,7 @@ $("form").submit(function (event) {
 /**
  * An Event listener that gets forecast data from the list of recent searches
  */
-$("#search-history").on("click","li",function(event){
+$("#search-history").on("click", "li", function (event) {
     event.preventDefault()
     let selectedCity = event.target.textContent
     getForecast(selectedCity)

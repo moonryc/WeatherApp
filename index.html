@@ -20,9 +20,9 @@
 <main class="container">
     <div class="row">
         <!--Search col-->
-        <div class="col">
+        <div class="col-3">
             <form>
-            <h4>Search for a City:</h4>
+                <h4>Search for a City:</h4>
                 <label for="cityInput">
                     <input id="cityInput"/>
                 </label>
@@ -33,41 +33,46 @@
 
         </div>
         <!--Search Results Col-->
-        <div class="col">
+        <div class="col-9">
             <div class="container">
                 <div class="row" id="today">Today's Data Display</div>
-                <div class="row">5 Day Forecast</div>
-                <div class="row">
-                    <div class="col card text-center" id="day1">
-                        <div class="card-body">
-                            <h5 class="card-title">Day 1</h5>
-                        <p class="card-text">Hello</p>
-                        </div>
-                    </div>
-                    <div class="col card text-center" id="day2">
-                        <div class="card-body">
-                            <h5 class="card-title">Day 2</h5>
-                            <p class="card-text">Hello</p>
-                        </div>
-                    </div>
-                    <div class="col card text-center" id="day3">
-                        <div class="card-body">
-                            <h5 class="card-title">Day 3</h5>
-                            <p class="card-text">Hello</p>
-                        </div>
-                    </div>
-                    <div class="col card text-center" id="day4">
-                        <div class="card-body">
-                            <h5 class="card-title">Day 4</h5>
-                            <p class="card-text">Hello</p>
-                        </div>
-                    </div>
-                    <div class="col card text-center" id="day5">
-                        <div class="card-body">
-                            <h5 class="card-title">Day 5</h5>
-                            <p class="card-text">Hello</p>
-                        </div>
-                    </div>
+                <h5 class="row">5 Day Forecast</h5>
+                <div class="row" id="forecast">
+<!--                    <div class="col card" id="day1">-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 class="card-title text-center">Day 1</h5>-->
+<!--                            <ul class="card-text">-->
+<!--                                <li>Hello</li>-->
+<!--                                <li>Hello</li>-->
+<!--                                <li>Hello</li>-->
+<!--                                <li>Hello</li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col card text-center" id="day2">-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 class="card-title">Day 2</h5>-->
+<!--                            <p class="card-text">Hello</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col card text-center" id="day3">-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 class="card-title">Day 3</h5>-->
+<!--                            <p class="card-text">Hello</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col card text-center" id="day4">-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 class="card-title">Day 4</h5>-->
+<!--                            <p class="card-text">Hello</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col card text-center" id="day5">-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 class="card-title">Day 5</h5>-->
+<!--                            <p class="card-text">Hello</p>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                 </div>
             </div>
@@ -77,8 +82,7 @@
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="assets/javascript/script.js"></script>
 </body>
 </html>
