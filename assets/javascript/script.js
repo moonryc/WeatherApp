@@ -148,22 +148,23 @@ const getForecast = (cityName) => {
 const generateForecastDay = (dayObject) => {
     let card = $("<div>").addClass("col card cardMinWidth m-1")
 
-    let cardBody = $("<div>").addClass("card-body")
+    let cardBody = $("<div>").addClass("card-body text-center")
     cardBody.appendTo(card)
 
     let cardTitle = $("<h5>").addClass("card-title text-center").text(dayObject.date)
     cardTitle.appendTo(cardBody)
 
-    let unorderedList = $("<ul>").addClass("card-text")
+    let forecastIcon = $(`<img alt='' src="http://openweathermap.org/img/wn/${dayObject.icon}@2x.png">`)
+    forecastIcon.appendTo(cardBody)
+
+    let unorderedList = $("<div>").addClass("card-text")
     unorderedList.appendTo(cardBody)
 
-    let forecastIcon = $(`<img alt='' src="http://openweathermap.org/img/wn/${dayObject.icon}@2x.png">`)
-    forecastIcon.appendTo(unorderedList)
-    let tempList = $("<li>").text(`${dayObject.temp} C°`)
+    let tempList = $("<p>").text(`${dayObject.temp} C°`)
     tempList.appendTo(unorderedList)
-    let windList = $("<li>").text(`${dayObject.wind} km/h`)
+    let windList = $("<p>").text(`${dayObject.wind} km/h`)
     windList.appendTo(unorderedList)
-    let humidityList = $("<li>").text(`${dayObject.humidity} %`)
+    let humidityList = $("<p>").text(`${dayObject.humidity}%`)
     humidityList.appendTo(unorderedList)
 
     forecastRow.append(card)
@@ -175,22 +176,34 @@ const generateWeatherToday = (todayObject) => {
     let cardBody = $("<div>").addClass("card-body")
     cardBody.appendTo(card)
 
-    let cardTitle = $("<h3>").addClass("card-title").text(`${todayObject.location} (${todayObject.date})`)
+    let cardTitle = $("<h3>").addClass("card-title text-capitalize").text(`${todayObject.location.toLowerCase()} (${todayObject.date})`)
     cardTitle.appendTo(cardBody)
 
     let forecastIcon = $(`<img alt='' src="http://openweathermap.org/img/wn/${todayObject.icon}@2x.png">`)
     forecastIcon.appendTo(cardTitle)
 
-    let unorderedList = $("<ul>").addClass("card-text")
+    let unorderedList = $("<ul>").addClass("card-text list-unstyled")
     unorderedList.appendTo(cardBody)
 
-    let tempList = $("<li>").text(`${todayObject.temp} C°`)
+    let tempList = $("<li>").text(`Temp: ${todayObject.temp} C°`)
     tempList.appendTo(unorderedList)
-    let windList = $("<li>").text(`${todayObject.wind} km/h`)
+    let windList = $("<li>").text(`Wind: ${todayObject.wind} km/h`)
     windList.appendTo(unorderedList)
-    let humidityList = $("<li>").text(`${todayObject.humidity} %`)
+    let humidityList = $("<li>").text(`Humidity: ${todayObject.humidity}%`)
     humidityList.appendTo(unorderedList)
-    let uvList = $("<li>").text(`${todayObject.uvIndex}`)
+    let uvList = $("<li>").text(`UV: `)
+    let uvIndexSpan = $("<span>").text(`${todayObject.uvIndex}`).addClass("badge badge-secondary")
+    uvIndexSpan.appendTo(uvList)
+
+    if(todayObject.uvIndex<2){
+        uvIndexSpan.addClass("bg-success")
+    }else if(2<=todayObject.uvIndex<5){
+        uvIndexSpan.addClass("bg-warning")
+    }else{
+        uvIndexSpan.addClass("bg-danger")
+    }
+
+
     uvList.appendTo(unorderedList)
 
 
