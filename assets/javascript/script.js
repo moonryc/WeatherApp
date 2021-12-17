@@ -6,19 +6,6 @@ let appid = "d72536f7b081c8bc80ce18b1e71d4181"
 //holds the list of previously searched cities
 let listOfSearchedCities = []
 
-
-// let today = {
-//     location: "",
-//     date: moment().format("(DD/MM/YYYY)"),
-//     temp: 0, // *F
-//     icon: "", //probably a string to an image
-//     wind: 0,//MPH
-//     humidity: 0,//%
-//     uvIndex: 0, //e.g 0.47
-// }
-
-
-
 /**
  * Adds the city to the list of searched cities and updates the display and localstorage
  * @param cityName
@@ -42,10 +29,11 @@ const loadPastSearches = () => {
         console.log("found existing data")
         generateSearchHistory()
     }
+    getForecast("New York")
 }
 
 /**
- * Clears the reselts from a previous search
+ * Removes the DOm elements that display weather from a previous search
  */
 const clearResults = () => {
     forecastRow.empty()
@@ -53,7 +41,7 @@ const clearResults = () => {
 }
 
 /**
- * Generates the list of recent searches from the local data of recently searched cities
+ * Generates the list elements of recent searches from the local data and appends to the DOM
  */
 const generateSearchHistory = () => {
     let searchHistoryEl = $("#search-history")
@@ -73,7 +61,8 @@ const generateSearchHistory = () => {
  */
 const getForecast = (cityName) => {
 
-    console.log(cityName)
+    //capitalize the first letter of the city
+    cityName = cityName.charAt(0).toUpperCase() + cityName.slice(1);
 
     /**
      * Gets the coordinates for a city
@@ -95,6 +84,11 @@ const getForecast = (cityName) => {
         })
     }
 
+    /**
+     * This function runs a fetch request to get the weather forecast date for a desired cities lat,lon
+     * @param lat
+     * @param lon
+     */
     const getWeather = (lat, lon) => {
 
         let coordinatesUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=metric&appid=${appid}`
@@ -136,9 +130,7 @@ const getForecast = (cityName) => {
 
     }
 
-
     getCityCoordinates()
-
 }
 
 /**
@@ -160,16 +152,20 @@ const generateForecastDay = (dayObject) => {
     let unorderedList = $("<div>").addClass("card-text")
     unorderedList.appendTo(cardBody)
 
-    let tempList = $("<p>").text(`${dayObject.temp} C°`)
+    let tempList = $("<p>").text(`Temp: ${dayObject.temp} °C`)
     tempList.appendTo(unorderedList)
-    let windList = $("<p>").text(`${dayObject.wind} km/h`)
+    let windList = $("<p>").text(`Wind: ${dayObject.wind} km/h`)
     windList.appendTo(unorderedList)
-    let humidityList = $("<p>").text(`${dayObject.humidity}%`)
+    let humidityList = $("<p>").text(`Humidity: ${dayObject.humidity}%`)
     humidityList.appendTo(unorderedList)
 
     forecastRow.append(card)
 }
 
+/**
+ * Generates the element for displaying todays weather and appends it to the document
+ * @param todayObject
+ */
 const generateWeatherToday = (todayObject) => {
     let card = $("<div>").addClass("col-12 card cardMinWidth m-1")
 
@@ -185,7 +181,7 @@ const generateWeatherToday = (todayObject) => {
     let unorderedList = $("<ul>").addClass("card-text list-unstyled")
     unorderedList.appendTo(cardBody)
 
-    let tempList = $("<li>").text(`Temp: ${todayObject.temp} C°`)
+    let tempList = $("<li>").text(`Temp: ${todayObject.temp} °C`)
     tempList.appendTo(unorderedList)
     let windList = $("<li>").text(`Wind: ${todayObject.wind} km/h`)
     windList.appendTo(unorderedList)
