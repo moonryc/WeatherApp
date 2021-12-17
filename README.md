@@ -1,10 +1,5 @@
-"# challenge6" 
-
-
-
-
 # Work Day Scheduler Starter Code
-<img src="https://img.shields.io/badge/CSS-17.1%25-green"> <img src="https://img.shields.io/badge/HTML-20.3%25-orange"> <img src="https://img.shields.io/badge/JAVASCRIPT-62.6%25-yellow">
+<img src="https://img.shields.io/badge/CSS-0.4%25-purple"> <img src="https://img.shields.io/badge/HTML-19.0%25-orange"> <img src="https://img.shields.io/badge/JAVASCRIPT-80.6%25-yellow">
 
 ## Description
 
