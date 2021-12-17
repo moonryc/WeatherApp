@@ -1,20 +1,23 @@
 let forecastRow = $("#forecast")
+let todayRow = $("#today")
 
 let appid = "d72536f7b081c8bc80ce18b1e71d4181"
 
-let listOfSearchedCities = [{}, {}, {}, {}, {}]
+//holds the list of previously searched cities
+let listOfSearchedCities = []
 
-let today = {
-    location: "",
-    date: moment().format("(DD/MM/YYYY)"),
-    temp: 0, // *F
-    icon: "", //probably a string to an image
-    wind: 0,//MPH
-    humidity: 0,//%
-    uvIndex: 0, //e.g 0.47
-}
 
-let fiveDayForecast = []
+// let today = {
+//     location: "",
+//     date: moment().format("(DD/MM/YYYY)"),
+//     temp: 0, // *F
+//     icon: "", //probably a string to an image
+//     wind: 0,//MPH
+//     humidity: 0,//%
+//     uvIndex: 0, //e.g 0.47
+// }
+
+
 
 /**
  * Adds the city to the list of searched cities and updates the display and localstorage
@@ -42,6 +45,14 @@ const loadPastSearches = () => {
 }
 
 /**
+ * Clears the reselts from a previous search
+ */
+const clearResults = () => {
+    forecastRow.empty()
+    todayRow.empty()
+}
+
+/**
  * Generates the list of recent searches from the local data of recently searched cities
  */
 const generateSearchHistory = () => {
@@ -66,16 +77,15 @@ const getForecast = (cityName) => {
 
     /**
      * Gets the coordinates for a city
-     * @param cityName
      */
-    const getCityCoordinates = (cityName) => {
+    const getCityCoordinates = () => {
 
         let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${appid}`
 
         fetch(apiUrl).then(response => {
             if (response.ok) {
                 response.json().then((data) => {
-                    const {coord} = data.city;
+                    const { coord } = data.city;
                     saveSearches(cityName)
                     getWeather(coord.lat, coord.lon)
                 })
@@ -92,30 +102,32 @@ const getForecast = (cityName) => {
         fetch(coordinatesUrl).then(response => {
             if (response.ok) {
                 response.json().then(data => {
-                    forecastRow.empty()
-                    today.location = cityName
-                    today.uvIndex = data.uvi
-                    today.date = moment().format("DD/MM/YYYY")
-                    today.icon = data.current.weather[0].icon
-                    today.wind = data.current.wind_speed
-                    today.humidity = data.current.humidity
-                    today.temp = data.current.temp
+                    clearResults()
+                    console.log(data)
+
+
+
+                    generateWeatherToday({
+                        location: cityName,
+                        uvIndex: data.current.uvi,
+                        date: moment().format("DD/MM/YYYY"),
+                        icon: data.current.weather[0].icon,
+                        wind: data.current.wind_speed,
+                        humidity: data.current.humidity,
+                        temp: data.current.temp,
+                    })
 
                     for (let i = 0; i < 5; i++) {
 
-                        fiveDayForecast[i] = {
+                        generateForecastDay({
                             date: moment().add(i, "days").format("DD/MM/YYYY"),
                             icon: data.daily[i].weather[0].icon,
                             temp: data.daily[i].temp.day,
                             wind: data.daily[i].wind_speed,
                             humidity: data.daily[i].humidity,
-                        }
-
-                        generateForecastDay(fiveDayForecast[i])
+                        })
 
                     }
-                    console.log(fiveDayForecast)
-                    console.log(today)
                 })
             } else {
                 alert("Error: Cannot get weather for these coordinates")
@@ -125,7 +137,7 @@ const getForecast = (cityName) => {
     }
 
 
-    getCityCoordinates(cityName)
+    getCityCoordinates()
 
 }
 
@@ -134,7 +146,7 @@ const getForecast = (cityName) => {
  * @param dayObject
  */
 const generateForecastDay = (dayObject) => {
-    let card = $("<div>").addClass("col card m-1")
+    let card = $("<div>").addClass("col card cardMinWidth m-1")
 
     let cardBody = $("<div>").addClass("card-body")
     cardBody.appendTo(card)
@@ -155,6 +167,35 @@ const generateForecastDay = (dayObject) => {
     humidityList.appendTo(unorderedList)
 
     forecastRow.append(card)
+}
+
+const generateWeatherToday = (todayObject) => {
+    let card = $("<div>").addClass("col-12 card cardMinWidth m-1")
+
+    let cardBody = $("<div>").addClass("card-body")
+    cardBody.appendTo(card)
+
+    let cardTitle = $("<h3>").addClass("card-title").text(`${todayObject.location} (${todayObject.date})`)
+    cardTitle.appendTo(cardBody)
+
+    let forecastIcon = $(`<img alt='' src="http://openweathermap.org/img/wn/${todayObject.icon}@2x.png">`)
+    forecastIcon.appendTo(cardTitle)
+
+    let unorderedList = $("<ul>").addClass("card-text")
+    unorderedList.appendTo(cardBody)
+
+    let tempList = $("<li>").text(`${todayObject.temp} C°`)
+    tempList.appendTo(unorderedList)
+    let windList = $("<li>").text(`${todayObject.wind} km/h`)
+    windList.appendTo(unorderedList)
+    let humidityList = $("<li>").text(`${todayObject.humidity} %`)
+    humidityList.appendTo(unorderedList)
+    let uvList = $("<li>").text(`${todayObject.uvIndex}`)
+    uvList.appendTo(unorderedList)
+
+
+
+    todayRow.append(card)
 }
 
 /**

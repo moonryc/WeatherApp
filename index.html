@@ -17,68 +17,29 @@
     </nav>
 </header>
 
-<main class="container">
+<main class="container-fluid">
     <div class="row">
         <!--Search col-->
-        <div class="col-3">
+        <div class="col-2 card cardMinWidth mt-3 p-3">
             <form>
                 <h4>Search for a City:</h4>
-                <label for="cityInput">
-                    <input id="cityInput"/>
+                <label for="cityInput" class="w-100">
+                    <input class="form-control" id="cityInput"/>
                 </label>
                 <br/>
-                <button>Search</button>
+                <button class="btn btn-primary w-100 my-1">Search</button>
             </form>
             <ul class="list-group" id="search-history"></ul>
-
         </div>
         <!--Search Results Col-->
-        <div class="col-9">
-            <div class="container">
-                <div class="row" id="today">Today's Data Display</div>
-                <h5 class="row">5 Day Forecast</h5>
-                <div class="row" id="forecast">
-<!--                    <div class="col card" id="day1">-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title text-center">Day 1</h5>-->
-<!--                            <ul class="card-text">-->
-<!--                                <li>Hello</li>-->
-<!--                                <li>Hello</li>-->
-<!--                                <li>Hello</li>-->
-<!--                                <li>Hello</li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col card text-center" id="day2">-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Day 2</h5>-->
-<!--                            <p class="card-text">Hello</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col card text-center" id="day3">-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Day 3</h5>-->
-<!--                            <p class="card-text">Hello</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col card text-center" id="day4">-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Day 4</h5>-->
-<!--                            <p class="card-text">Hello</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="col card text-center" id="day5">-->
-<!--                        <div class="card-body">-->
-<!--                            <h5 class="card-title">Day 5</h5>-->
-<!--                            <p class="card-text">Hello</p>-->
-<!--                        </div>-->
-<!--                    </div>-->
-
-                </div>
+        <div class="col-10 mt-3">
+            <div class="container w-100">
+                <div class="row" id="today"></div>
+                <h4 class="row">5 Day Forecast</h4>
+                <div class="row" id="forecast"></div>
             </div>
         </div>
     </div>
-
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
